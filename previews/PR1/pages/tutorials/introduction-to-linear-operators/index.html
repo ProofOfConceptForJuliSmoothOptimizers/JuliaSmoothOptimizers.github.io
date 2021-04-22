@@ -65,10 +65,10 @@ opB &#61; LinearOperator&#40;B&#41;
 
 v &#61; rand&#40;n&#41;
 @time A * &#40;B * v&#41;
-@time &#40;opA * opB&#41; * v;</code></pre><pre><code class=plaintext >  1.655869 seconds (2.49 M allocations: 241.546 MiB, 8.74% gc time)
+@time &#40;opA * opB&#41; * v;</code></pre><pre><code class=plaintext >  1.641701 seconds (2.49 M allocations: 241.537 MiB, 9.24% gc time)
   0.000003 seconds (4 allocations: 176 bytes)
-  0.079902 seconds (260.28 k allocations: 13.703 MiB)
-  0.020018 seconds (1.88 k allocations: 164.952 KiB)
+  0.079493 seconds (260.28 k allocations: 13.712 MiB)
+  0.020153 seconds (1.88 k allocations: 164.952 KiB)
 </code></pre>
 <h2 id=preallocated_operators ><a href="#preallocated_operators" class=header-anchor >Preallocated Operators</a></h2>
 <p>It is often useful to reuse the memory used in a linear operator. If the operator is created from a matrix <code>A</code>, <code>PreallocatedLinearOperator&#40;A&#41;</code> automatically creates the underlying memory to store <code>A * v</code>, <code>transpose&#40;A&#41; * v</code> and <code>A&#39; * v</code>.</p>
@@ -97,7 +97,7 @@ A &#61; A&#39; * A
 op &#61; opCholesky&#40;A&#41;  # Use, e.g., as a preconditioner
 v &#61; rand&#40;5&#41;
 
-norm&#40;A \ v - op * v&#41; / norm&#40;v&#41;</code></pre><pre><code class=plaintext >3.223345745966415e-11</code></pre>
+norm&#40;A \ v - op * v&#41; / norm&#40;v&#41;</code></pre><pre><code class=plaintext >8.089364967775176e-11</code></pre>
 <h2 id=lbfgs_operator ><a href="#lbfgs_operator" class=header-anchor >LBFGS Operator</a></h2>
 <p>A useful operator is the Limited BFGS operator, which implements the BFGS update with limited memory used in nonlinear optimization. This update comes in both direct &#40;\(B_k\)&#41; and inverse &#40;\(H_k = B_k^{-1}\)&#41; form.</p>
 \[
@@ -119,7 +119,7 @@ Bq &#61; q &#43; dot&#40;y, q&#41; / dot&#40;y, s&#41; * y - dot&#40;s, q&#41; /
 Hauxq &#61; q - dot&#40;s, q&#41; / dot&#40;y, s&#41; * y
 Hq &#61; Hauxq - dot&#40;y, Hauxq&#41; / dot&#40;y, s&#41; * s &#43; dot&#40;s, q&#41; / dot&#40;y, s&#41; * s
 
-norm&#40;B * q - Bq&#41;, norm&#40;H * q - Hq&#41;, norm&#40;B * H * q - q&#41;</code></pre><pre><code class=plaintext >(4.577566798522237e-16, 1.2412670766236366e-16, 7.195067539997724e-16)</code></pre>
+norm&#40;B * q - Bq&#41;, norm&#40;H * q - Hq&#41;, norm&#40;B * H * q - q&#41;</code></pre><pre><code class=plaintext >(2.0014830212433605e-16, 2.7755575615628914e-16, 3.3306690738754696e-16)</code></pre>
 <h2 id=application_heat_equation ><a href="#application_heat_equation" class=header-anchor >Application: Heat Equation</a></h2>
 <p>Consider a square plate of size \(L \times L\) with no heat exchange on the boundaries. The Heat Equation and boundary conditions related to the temperature \(u(t,x,y)\) at time \(t\), position \((x,y)\) is given by</p>
 \[
